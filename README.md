@@ -1,6 +1,6 @@
 ## Foggie NFT Stock Checker
 
-This is a simple script to check the current stock of the Foggie NFTs on foggie.io.
+This is a simple application to check the current stock of the Foggie NFTs on foggie.io.
 
 It will check the stock Every 5 seconds  and send a email notification if the stock is available.
 
@@ -8,6 +8,14 @@ It will check the stock Every 5 seconds  and send a email notification if the st
 https://foggie.fogworks.io/api/pms/product
 
 ## Usage 
+
+* In windows 
+
+   1. Open  cmd.exe first
+   2. Drag the foggiechecker.exe to the cmd.exe
+
+* In Mac or Linux
+   run the following command in the terminal
 
 ```sh
 
