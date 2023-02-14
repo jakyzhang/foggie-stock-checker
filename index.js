@@ -4,6 +4,8 @@ const wellKnown = require("nodemailer/lib/well-known");
 const fetch = require("node-fetch");
 const yargs = require("yargs");
 
+var noticeSendThisTime = false;
+
 async function sendEmail(subject, body) {
   let sender = process.env.SENDER;
   let receiver = process.env.RECEIVER;
@@ -57,11 +59,11 @@ async function check() {
         hour12: false,
       })}  https://foggie.fogworks.io/`;
       await sendEmail(subject, body);
-      product.notified = true;
+      noticeSendThisTime = true;
     }
 
-    if (product.stock == 0 && product.notified) {
-      product.notified = false;
+    if (product.stock == 0 && noticeSendThisTime) {
+      noticeSendThisTime = false;
     }
   }
 
