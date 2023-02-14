@@ -49,7 +49,7 @@ async function check() {
   var hasStock = false;
 
   for (const product of json.data) {
-    if (product.stock > 0 && !product.notified) {
+    if (product.stock > 0 && !noticeSendThisTime) {
       hasStock = true;
 
       var subject = `[Foggie Stock Notice] Product ${product.name} stock is ${product.stock}`;
@@ -64,7 +64,7 @@ async function check() {
 
     if (product.stock == 0 && noticeSendThisTime) {
       noticeSendThisTime = false;
-    }
+    } 
   }
 
   console.log(
