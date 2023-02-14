@@ -49,8 +49,12 @@ async function check() {
   var hasStock = false;
 
   for (const product of json.data) {
-    if (product.stock > 0 && !noticeSendThisTime) {
+    if (product.stock > 0) {
       hasStock = true;
+
+      if (noticeSendThisTime) {
+          break;
+      }
 
       var subject = `[Foggie Stock Notice] Product ${product.name} stock is ${product.stock}`;
       var body = ` ${product.name}, stock is ${
@@ -58,7 +62,8 @@ async function check() {
       } @ ${new Date().toLocaleString("zh-CN", {
         hour12: false,
       })}  https://foggie.fogworks.io/`;
-      await sendEmail(subject, body);
+      console.log(`[SEND-MAIL] ${subject} ${body}`);
+      //await sendEmail(subject, body);
       noticeSendThisTime = true;
     }
 
