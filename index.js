@@ -47,13 +47,13 @@ async function check() {
   const json = await response.json();
 
   var hasStock = false;
-
+  var stockInfo = [];
   for (const product of json.data) {
+    stockInfo.push(`${product.name}:${product.stock}`);
     if (product.stock > 0) {
       hasStock = true;
-
       if (noticeSendThisTime) {
-          break;
+        continue;
       }
 
       var subject = `[Foggie Stock Notice] Product ${product.name} stock is ${product.stock}`;
@@ -62,18 +62,18 @@ async function check() {
       } @ ${new Date().toLocaleString("zh-CN", {
         hour12: false,
       })}  https://foggie.fogworks.io/`;
-      console.log(`[SEND-MAIL] ${subject} ${body}`);
-      //await sendEmail(subject, body);
+      console.log(`[EMAIL] ${subject}`);
+      await sendEmail(subject, body);
       noticeSendThisTime = true;
     }
+  }
 
-    if (product.stock == 0 && noticeSendThisTime) {
+  if (!hasStock && noticeSendThisTime) {
       noticeSendThisTime = false;
-    } 
   }
 
   console.log(
-    "[FOOGIE] " + (hasStock ? "Has Stock" : "No Stock") +
+    "[FOOGIE] " + (hasStock ? "Has Stock 【" + stockInfo + "】": "No Stock") +
       " @" +
       new Date().toLocaleString("zh-CN", { hour12: false })
   );
